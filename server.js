@@ -1,31 +1,21 @@
-// week 1
-// Import express using ESM syntax
 import express from 'express';
 
-//week 2 
-// Add these imports to your existing imports
 import { fileURLToPath } from 'url';
 import path from 'path';
 
-// Create an instance of an Express application
 const app = express();
 const name = process.env.NAME;
 
-//week 2
-// Create __dirname and __filename variables
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // week 1 
 // Define a route handler for the root URL ('/')
-// app.get('/', (req, res) => {
-//     res.send(`Hello, ${name}!`);
-// });
+app.get('/', (req, res) => {
+    res.send(`Hello, ${name}!`);
+});
 
-// Define the port number the server will listen on
-// const PORT = 3000;
 
-// Define important variables
 const mode = process.env.MODE || 'production';
 const port = process.env.PORT || 3000;
 
@@ -35,20 +25,18 @@ const port = process.env.PORT || 3000;
 // });
 
 
-//week 2
-// Serve static files from the public directory
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '/views/home.html'));
+    res.sendFile(path.join(__dirname, '/views/index.ejs'));
 });
 
 app.get('/page1', (req, res) => {
-    res.sendFile(path.join(__dirname, '/views/page1.html'));
+    res.sendFile(path.join(__dirname, '/views/partials/footer.ejs'));
 });
 
 app.get('/page2', (req, res) => {
-    res.sendFile(path.join(__dirname, '/views/page2.html'));
+    res.sendFile(path.join(__dirname, '/views/partials/footer.ejs'));
 });
 
 

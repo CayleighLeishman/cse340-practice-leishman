@@ -1,0 +1,33 @@
+<h1>Delete a Category</h1>
+ 
+<div class="category-table">
+    <div class="category-row header">
+        <div class="category-cell">Category Name</div>
+        <div class="category-cell">Move Games To</div>
+        <div class="category-cell">Delete</div>
+    </div>
+ 
+    <% categories.forEach((category) => { %>
+        <form action="/category/delete/<%- category.category_id %>" method="POST">
+            <div class="category-row">
+                <div class="category-cell"><%= category.category_name %></div>
+                <div class="category-cell">
+                    <select name="new_category_id">
+                        <option value="">-- Choose an Option --</option>
+                        <option value="delete">Do Not Move, Delete Games</option>
+                        <% categories.forEach((otherCategory) => { %>
+                            <option value="<%= otherCategory.category_id %>">
+                                <%= otherCategory.category_name %>
+                            </option>
+                        <% }); %>
+                    </select>
+                </div>
+                <div class="category-cell">
+                    <button type="submit">
+                        Delete
+                    </button>
+                </div>
+            </div>
+        </form>
+    <% }); %>
+</div>

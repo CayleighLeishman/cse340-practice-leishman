@@ -1,12 +1,21 @@
-import { getNavigationLinks } from '../models/index.js';
- 
+import { getCategories } from '../models/category/index.js';
+
 const getNav = async () => {
-    const links = await getNavigationLinks();
+    const categories = await getCategories();
     let nav = '<nav><ul>';
-    links.forEach((linkInfo) => {
-        nav += `<li><a href="${linkInfo.route}">${linkInfo.name}</a></li>`
+    categories.forEach((row) => {
+        const id = row.category_id;
+        const name = row.category_name;
+        nav += `<li><a href="/category/view/${id}">${name}</a></li>`
     });
-    return `${nav}</ul></nav>`;
+    return `
+    ${nav}
+        <li><a href="/game/add">Add Game</a></li>
+        <li><a href="/category/add">Add Category</a></li>
+        <li><a href="/category/delete">Delete Category</a></li>
+        <li><a href="/About">About Me</a></li>
+        </ul>
+    </nav>`;
 };
- 
+
 export { getNav };

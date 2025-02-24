@@ -1,0 +1,16 @@
+<div class="game-grid">
+    <% games.forEach((game) => { %>
+        <div class="game-card">
+            <img src="<%= game.image_path %>" alt="<%= game.game_name %>">
+            <h3><%= game.game_name %></h3>
+            <p><%= game.game_description %></p>
+            
+            <a href="/game/edit/<%= game.game_id %>">Edit</a>
+
+            <form action="/game/delete/<%= game.game_id %>" method="POST">
+                <input type="hidden" name="game_id" value="<%= game.game_id %>">
+                <button type="submit">Delete</button>
+            </form>
+        </div>
+    <% }); %>
+</div>

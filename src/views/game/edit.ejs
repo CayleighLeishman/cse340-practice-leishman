@@ -1,0 +1,32 @@
+<form action="/game/edit/<%= game.game_id %>" method="POST" enctype="multipart/form-data">
+    <img class="game-image" src="<%= game.image_path || 'https://placehold.co/300x300/jpg' %>" alt="Game Image">
+    <div>
+        <label for="game_name">Game Name:</label>
+        <input type="text" id="game_name" name="game_name" value="<%= game.game_name %>" required>
+    </div>
+
+    <div>
+        <label for="game_description">Game Description:</label>
+        <textarea id="game_description" name="game_description" required><%= game.game_description %></textarea>
+    </div>
+
+    <div>
+        <label for="category_id">category:</label>
+        <select id="category_id" name="category_id" required>
+            <option value="" disabled selected>Select category</option>
+            <% categories.forEach((category) => { %>
+                <option value="<%= category.category_id %>" 
+                    <%= game.category_id === category.category_id ? 'selected' : '' %>>
+                    <%= category.category_name %>
+                </option>
+            <% }); %>
+        </select>
+    </div>
+
+    <div>
+        <label for="image">Image:</label>
+        <input type="file" id="image" name="image">
+    </div>
+
+    <button type="submit">Update Game</button>
+</form>

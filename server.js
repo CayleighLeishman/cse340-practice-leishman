@@ -62,6 +62,7 @@ app.use('/category', categoryRoute);
 app.use(notFoundHandler);
 app.use(globalErrorHandler);
 
+
 // When in development mode, start a WebSocket server for live reloading
 if (mode.includes('dev')) {
     const ws = await import('ws');

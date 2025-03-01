@@ -14,6 +14,13 @@ CREATE TABLE IF NOT EXISTS games (
     FOREIGN KEY (category_id) REFERENCES category(category_id) ON DELETE CASCADE
 );
  
+ -- Create the users table if it doesn't exist
+CREATE TABLE IF NOT EXISTS users (
+    user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email TEXT UNIQUE NOT NULL,
+    password TEXT NOT NULL
+);
+
 -- Insert initial categories
 INSERT OR IGNORE INTO category (category_id, category_name) VALUES
 (1, 'Strategy'),

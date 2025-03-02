@@ -1,6 +1,9 @@
 // Import required modules using ESM import syntax
 import express from 'express';
 import path from 'path';
+import session from 'express-session';
+import sqlite from 'connect-sqlite3';
+
 import { fileURLToPath } from 'url';
 
 // Import all other required modules: Route handlers, Middleware, etc.
@@ -13,8 +16,7 @@ import gameRoute from './src/routes/game/index.js';
 import layouts from './src/middleware/layouts.js';
 import { notFoundHandler, globalErrorHandler } from './src/middleware/error-handler.js';
 import { setupDatabase } from './src/database/index.js';
-import session from 'express-session';
-import sqlite from "connect-sqlite3";
+
  
 // Get the current file path and directory name
 const __filename = fileURLToPath(import.meta.url);

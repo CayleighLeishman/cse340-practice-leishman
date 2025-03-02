@@ -13,7 +13,9 @@ import gameRoute from './src/routes/game/index.js';
 import layouts from './src/middleware/layouts.js';
 import { notFoundHandler, globalErrorHandler } from './src/middleware/error-handler.js';
 import { setupDatabase } from './src/database/index.js';
-
+import session from 'express-session';
+import sqlite from "connect-sqlite3";
+ 
 // Get the current file path and directory name
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -22,11 +24,29 @@ const __dirname = path.dirname(__filename);
 const port = process.env.PORT || 3000;
 const mode = process.env.MODE || 'production';
 
+const sqliteSessionStore = sqlite(session);
+
 // Create an instance of an Express application
 const app = express();
 
 // Configure the application based on environment settings
 app.use(configNodeEnv);
+
+app.use(session({
+    store: new sqliteSessionStore({
+        db: "db.sqlite",           // SQLite database file
+        dir: "./src/database/",    // Directory where the file is stored
+        concurrentDB: true         // Allows multiple processes to use the database
+    }),
+    secret: process.env.SESSION_SECRET || "default-secret",
+    resave: false,                 // Prevents re-saving sessions that have not changed
+    saveUninitialized: true,       // Saves new sessions even if unmodified
+    name: "sessionId",
+    cookie: {
+        secure: false,             // Set to `true` in production with HTTPS
+        httpOnly: true,            // Prevents client-side access to the cookie
+    }
+}));
 
 // Configure static paths for the Express application
 configureStaticPaths(app);

@@ -15,9 +15,12 @@ const layouts = (req, res, next) => {
     
     // Override `res.render()` to apply layouts automatically.
     res.render = (view, options = {}, callback) => {
+         // Merge res.locals with options
+        const mergedOptions = {...res.locals, ...options};
+    
         // If layout is explicitly set to `false`, render the view normally without a layout
-        if (options.layout === false) {
-            return originalRender.call(res, view, options, callback);
+        if (mergedOptions.layout === false) {
+            return originalRender.call(res, view, mergedOptions, callback);
         }
 
         // Resolve the full path of the requested view
@@ -25,20 +28,20 @@ const layouts = (req, res, next) => {
         const viewPath = view.startsWith(viewsDir) ? view : path.join(viewsDir, `${view}.ejs`);
 
         // First, render the requested view to get its content
-        renderFile(viewPath, options, (err, body) => {
+        renderFile(viewPath, mergedOptions , (err, body) => {
             if (err) {
                 return next(err);
             }
 
             // Store the rendered content in `options.body`, so the layout can use it
-            options.body = body || '';
+            mergedOptions.body = body || '';
 
             // Determine which layout to use (default layout or a custom one if specified)
-            const layoutFile = `${options.layout || defaultLayout}.ejs`;
+            const layoutFile = `${mergedOptions.layout || defaultLayout}.ejs`;
             const layoutPath = path.join(layoutDir, layoutFile);
 
             // Render the selected layout, passing the rendered view content
-            originalRender.call(res, layoutPath, options, callback);
+            originalRender.call(res, layoutPath, mergedOptions, callback);
         });
     };
 
@@ -49,3 +52,4 @@ const layouts = (req, res, next) => {
 };
 
 export default layouts;
+ 

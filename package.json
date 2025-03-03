@@ -4,7 +4,8 @@
     "ws": "^8.18.0"
   },
   "scripts": {
-    "dev": "nodemon --env-file=.env server.js"
+    "dev": "nodemon --env-file=.env server.js",
+    "start" : "node server.js"
   },
   "type": "module",
   "dependencies": {

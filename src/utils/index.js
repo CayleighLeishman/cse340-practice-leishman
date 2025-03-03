@@ -10,6 +10,10 @@ const getNav = async () => {
     });
     return `
     
+    // TO DO/to do :
+    //  if users logged in do this 
+    // write code here 
+    // else (code below)
     ${nav}
         <li><a href="/game/add">Add Game</a></li>
         <li><a href="/category/add">Add Category</a></li>
